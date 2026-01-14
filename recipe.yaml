@@ -1,0 +1,133 @@
+$engine: 3
+$onesync: on
+
+name: "Konjexx RP (DE) | Realtime+Winter | Cityhall PD/MD | Drugs Routen | Shops | Jobs | Kaufen"
+version: "3.0.0"
+author: "Konjexx"
+description: "Deutsch | Echtzeit+Winter/Schnee (Dez/Jan) | PD/MD ohne Whitelist | Drogenrouten | Shops | Jobs | Vehicleshop"
+
+tasks:
+  - action: connect_database
+
+  # CFX defaults
+  - action: download_github
+    src: https://github.com/citizenfx/cfx-server-data
+    ref: master
+    subpath: resources
+    dest: ./resources/[cfx-default]
+  - action: remove_path
+    path: ./resources/[cfx-default]/[gameplay]/chat
+
+  # OX stack
+  - action: download_github
+    src: https://github.com/communityox/ox_lib
+    ref: main
+    dest: ./resources/[ox]/ox_lib
+  - action: download_github
+    src: https://github.com/communityox/oxmysql
+    ref: main
+    dest: ./resources/[ox]/oxmysql
+  - action: download_github
+    src: https://github.com/communityox/ox_inventory
+    ref: main
+    dest: ./resources/[ox]/ox_inventory
+  - action: download_github
+    src: https://github.com/communityox/ox_target
+    ref: main
+    dest: ./resources/[ox]/ox_target
+
+  # Qbox core
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_core
+    ref: main
+    dest: ./resources/[qbx]/qbx_core
+  - action: query_database
+    file: ./resources/[qbx]/qbx_core/qbx_core.sql
+
+  # smallresources (deprecated, aber noch oft genutzt)
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_smallresources
+    ref: main
+    dest: ./resources/[qbx]/qbx_smallresources
+
+  # Cityhall
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_cityhall
+    ref: main
+    dest: ./resources/[qbx]/qbx_cityhall
+
+  # PD/MD (Achtung: qbx_police README nutzt "qbx_policejob" als resource name)
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_police
+    ref: main
+    dest: ./resources/[qbx]/qbx_policejob
+
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_ambulancejob
+    ref: main
+    dest: ./resources/[qbx]/qbx_ambulancejob
+
+  # Vehicles / Kaufen
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_vehicles
+    ref: main
+    dest: ./resources/[qbx]/qbx_vehicles
+  - action: query_database
+    file: ./resources/[qbx]/qbx_vehicles/vehicles.sql
+
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_vehicleshop
+    ref: main
+    dest: ./resources/[qbx]/qbx_vehicleshop
+
+  # Jobs (schön & beliebt)
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_mechanicjob
+    ref: main
+    dest: ./resources/[qbx]/qbx_mechanicjob
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_taxijob
+    ref: main
+    dest: ./resources/[qbx]/qbx_taxijob
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_garbagejob
+    ref: main
+    dest: ./resources/[qbx]/qbx_garbagejob
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_truckerjob
+    ref: main
+    dest: ./resources/[qbx]/qbx_truckerjob
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_recyclejob
+    ref: main
+    dest: ./resources/[qbx]/qbx_recyclejob
+
+  # Drugs (Core)
+  - action: download_github
+    src: https://github.com/Qbox-project/qbx_drugs
+    ref: main
+    dest: ./resources/[qbx]/qbx_drugs
+  - action: query_database
+    file: ./resources/[qbx]/qbx_drugs/qbx_drugs.sql
+
+  # Shops (für qbx_core + ox_inventory)
+  - action: download_github
+    src: https://github.com/jellyton255/ef_shops
+    ref: master
+    dest: ./resources/[standalone]/ef_shops
+
+  # Deine Konjexx Extras (Cityhall Join + Drug Routes + Realtime/Winter)
+  - action: download_github
+    src: https://github.com/DEIN_GITHUB_NAME/konjexx-rp-recipe
+    ref: main
+    subpath: resources/[konjexx]
+    dest: ./resources/[konjexx]
+  - action: query_database
+    file: ./resources/[konjexx]/k_drugroutes/sql/items.sql
+
+  # server.cfg aus deinem Repo
+  - action: download_github
+    src: https://github.com/DEIN_GITHUB_NAME/konjexx-rp-recipe
+    ref: main
+    subpath: server.cfg
+    dest: ./
